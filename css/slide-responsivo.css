@@ -3,41 +3,149 @@
    de forma responsiva em qualquer dispositivo
    ================================================================ */
 
-/* --- Regra geral: computador / tablet --- */
-.page_slider .flexslider .slides li img {
-    width: 100% !important;     /* ocupa toda a largura da tela */
-    height: auto !important;    /* altura proporcional */
-    object-fit: contain !important; /* impede corte */
-    max-height: 100vh;          /* evita passar da altura da tela */
+/* --- Container principal do slider --- */
+.page_slider .flexslider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
 }
 
-/* --- Ajuste para evitar que o slider force cortes --- */
+/* --- Slides individuais --- */
 .page_slider .flexslider .slides li {
-    text-align: center;         /* centraliza o conteúdo */
+    position: relative;
+    text-align: center;
+    height: 70vh; /* Altura padrão para desktop */
+    min-height: 500px;
 }
 
-/* --- Ajuste extra para celular: usa a imagem como fundo
-       para garantir que caiba inteira, sem zoom nem duplicação --- */
-@media (max-width: 768px) {
+/* --- Imagens do slider para desktop/tablet --- */
+.page_slider .flexslider .slides li img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Cobre toda a área mantendo proporção */
+    object-position: center;
+}
 
-    /* esconde a tag <img> para não duplicar a imagem */
+/* --- Container do conteúdo sobre a imagem --- */
+.intro_layers_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Correção do botão "Mais Informações" --- */
+.intro_layer .btn {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    margin-top: 20px;
+    transform: none !important;
+}
+
+/* --- Ajustes para tablets --- */
+@media (max-width: 1024px) {
+    .page_slider .flexslider .slides li {
+        height: 60vh;
+        min-height: 400px;
+    }
+}
+
+/* --- Ajuste completo para celular --- */
+@media (max-width: 768px) {
+    
+    /* Altura do slide para mobile */
+    .page_slider .flexslider .slides li {
+        height: 100vh !important; /* Ocupa tela inteira */
+        min-height: 568px; /* Altura mínima para iPhone SE */
+    }
+    
+    /* Esconde a tag <img> para usar background */
     .page_slider .flexslider .slides li img {
         display: none !important;
     }
-
-    /* aplica a imagem como background redimensionado */
+    
+    /* Aplica a imagem como background redimensionado */
     .page_slider .flexslider .slides li {
         background-size: contain !important;
         background-position: center center !important;
         background-repeat: no-repeat !important;
-        height: 100vh !important;   /* ocupa a altura total da tela */
+        background-color: #f8f8f8; /* Cor de fundo caso a imagem não carregue */
     }
-
-    /* define a imagem correta para cada slide */
+    
+    /* Define a imagem correta para cada slide */
     .page_slider .flexslider .slides li:nth-child(1) {
         background-image: url("../images/slide01.jpg");
     }
     .page_slider .flexslider .slides li:nth-child(2) {
         background-image: url("../images/slide-parceiro.jpg");
+    }
+    
+    /* Ajustes no conteúdo para mobile */
+    .intro_layers {
+        text-align: center;
+        padding: 0 20px;
+    }
+    
+    .intro_layer h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .intro_layer .after-title {
+        font-size: 1.4rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .slider-list {
+        padding-left: 0;
+        margin: 15px 0;
+    }
+    
+    .slider-list li {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    /* Botão ajustado para mobile */
+    .intro_layer .btn {
+        margin-top: 25px;
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+}
+
+/* --- Ajustes para telas muito pequenas --- */
+@media (max-width: 480px) {
+    .page_slider .flexslider .slides li {
+        min-height: 480px;
+    }
+    
+    .intro_layer h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .intro_layer .after-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .slider-list li {
+        font-size: 0.85rem;
+    }
+    
+    .intro_layer .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Ajustes para telas muito altas --- */
+@media (min-height: 1000px) and (max-width: 768px) {
+    .page_slider .flexslider .slides li {
+        height: 80vh !important;
     }
 }
