@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prova de Informática Básica</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #080455, #1a1aff);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header, footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.2);
+    }
+    main {
+      flex: 1;
+      padding: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.3rem 0;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #ffcc00;
+      color: #080455;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background-color: #ffaa00; }
+    .hidden { display: none; }
+    .questao {
+      background: rgba(255,255,255,0.1);
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+    }
+    #pixContainer img { max-width: 250px; display:block; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Prova de Informática Básica</h1>
+    <p>Complete a prova. Se tirar acima de 50%, você poderá gerar seu certificado digital.</p>
+  </header>
+
+  <main>
+    <!-- Dados do aluno -->
+    <section class="dados-aluno">
+      <h2>Seus Dados</h2>
+      <form id="dadosForm">
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" required>
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" required pattern="\d{11}">
+        <button type="submit">Iniciar Prova</button>
+      </form>
+    </section>
+
+    <!-- Prova -->
+    <section id="prova" class="hidden">
+      <form id="quizForm">
+        <div id="questoes"></div>
+        <button type="submit">Finalizar Prova</button>
+      </form>
+    </section>
+
+    <!-- Resultado -->
+    <section id="resultado" class="hidden">
+      <h2>Resultado</h2>
+      <p id="mensagemResultado"></p>
+      <button id="btnPagamento" class="hidden">Gerar Certificado</button>
+
+      <!-- Pix -->
+      <div id="pixContainer" class="hidden">
+        <h3>Pague com Pix</h3>
+        <div id="qrCode"></div>
+        <p>Ou copie e cole o código:</p>
+        <input type="text" id="pixCode" readonly>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MAC BRASIL - Cursos e Treinamentos.</p>
+  </footer>
+
+  <script>
+    document.getElementById("dadosForm").addEventListener("submit", e => {
+      e.preventDefault();
+      document.querySelector(".dados-aluno").classList.add("hidden");
+      document.getElementById("prova").classList.remove("hidden");
+      gerarQuestoes();
+    });
+
+    function gerarQuestoes() {
+      const questoes = [
+        { pergunta: "O que é um sistema operacional?", opcoes: ["Um programa que controla o computador", "Um tipo de hardware", "Um periférico externo"], correta: 0 },
+        { pergunta: "O que significa 'CPU'?", opcoes: ["Central Processing Unit", "Computer Personal Unit", "Central Personal Utility"], correta: 0 },
+        { pergunta: "Qual a função do mouse?", opcoes: ["Entrada de dados", "Saída de dados", "Armazenamento"], correta: 0 },
+      ];
+
+      const container = document.getElementById("questoes");
+      questoes.forEach((q, i) => {
+        const div = document.createElement("div");
+        div.classList.add("questao");
+        div.innerHTML = `<p>${i+1}. ${q.pergunta}</p>` + 
+          q.opcoes.map((op, j) => `<label><input type="radio" name="q${i}" value="${j}" required> ${op}</label><br>`).join("");
+        container.appendChild(div);
+      });
+
+      document.getElementById("quizForm").addEventListener("submit", e => {
+        e.preventDefault();
+        let acertos = 0;
+        questoes.forEach((q, i) => {
+          const marcada = document.querySelector(`input[name="q${i}"]:checked`);
+          if (marcada && parseInt(marcada.value) === q.correta) acertos++;
+        });
+        const nota = (acertos / questoes.length) * 100;
+        document.getElementById("prova").classList.add("hidden");
+        document.getElementById("resultado").classList.remove("hidden");
+        const msg = document.getElementById("mensagemResultado");
+        if (nota >= 50) {
+          msg.innerHTML = `Parabéns! Você tirou ${nota.toFixed(0)}%.`;
+          document.getElementById("btnPagamento").classList.remove("hidden");
+        } else {
+          msg.innerHTML = `Você tirou ${nota.toFixed(0)}%. Estude mais e tente novamente.`;
+        }
+      });
+
+      document.getElementById("btnPagamento").addEventListener("click", async () => {
+        const btn = document.getElementById("btnPagamento");
+        btn.disabled = true;
+        btn.innerText = "Gerando pagamento...";
+
+        const response = await fetch("process_payment.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nome: document.getElementById("nome").value,
+            cpf: document.getElementById("cpf").value,
+            valor: 50
+          })
+        });
+
+        const data = await response.json();
+
+        document.getElementById("pixContainer").classList.remove("hidden");
+        document.getElementById("qrCode").innerHTML = `<img src="data:image/png;base64,${data.qr_code_base64}" alt="QR Code Pix">`;
+        document.getElementById("pixCode").value = data.qr_code;
+
+        btn.style.display = "none";
+      });
+    }
+  </script>
+</body>
+</html>

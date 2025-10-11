@@ -1,0 +1,43 @@
+/* ================================================================
+   Correção completa para exibir slide01.jpg e slide-parceiro.jpg
+   de forma responsiva em qualquer dispositivo
+   ================================================================ */
+
+/* --- Regra geral: computador / tablet --- */
+.page_slider .flexslider .slides li img {
+    width: 100% !important;     /* ocupa toda a largura da tela */
+    height: auto !important;    /* altura proporcional */
+    object-fit: contain !important; /* impede corte */
+    max-height: 100vh;          /* evita passar da altura da tela */
+}
+
+/* --- Ajuste para evitar que o slider force cortes --- */
+.page_slider .flexslider .slides li {
+    text-align: center;         /* centraliza o conteúdo */
+}
+
+/* --- Ajuste extra para celular: usa a imagem como fundo
+       para garantir que caiba inteira, sem zoom nem duplicação --- */
+@media (max-width: 768px) {
+
+    /* esconde a tag <img> para não duplicar a imagem */
+    .page_slider .flexslider .slides li img {
+        display: none !important;
+    }
+
+    /* aplica a imagem como background redimensionado */
+    .page_slider .flexslider .slides li {
+        background-size: contain !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        height: 100vh !important;   /* ocupa a altura total da tela */
+    }
+
+    /* define a imagem correta para cada slide */
+    .page_slider .flexslider .slides li:nth-child(1) {
+        background-image: url("../images/slide01.jpg");
+    }
+    .page_slider .flexslider .slides li:nth-child(2) {
+        background-image: url("../images/slide-parceiro.jpg");
+    }
+}

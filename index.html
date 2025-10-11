@@ -1,537 +1,1001 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento com Pix - Mercado Pago</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            color: #009ee3;
-            margin-bottom: 10px;
-        }
-        
-        .payment-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .payment-info {
-            margin-bottom: 25px;
-        }
-        
-        .payment-amount {
-            font-size: 24px;
-            font-weight: bold;
-            color: #009ee3;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .qr-code-container {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: white;
-        }
-        
-        .copy-code-container {
-            margin-bottom: 20px;
-        }
-        
-        .copy-code-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        .copy-code-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: #f9f9f9;
-            font-family: monospace;
-        }
-        
-        .copy-button {
-            width: 100%;
-            padding: 12px;
-            background-color: #009ee3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        
-        .instructions {
-            background-color: #f0f8ff;
-            border-left: 4px solid #009ee3;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .payment-status {
-            text-align: center;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-        
-        .status-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .status-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            display: none;
-        }
-        
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #009ee3;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #777;
-            font-size: 14px;
-        }
-        
-        .start-button {
-            width: 100%;
-            padding: 15px;
-            background-color: #009ee3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-    </style>
+﻿<!DOCTYPE html><!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]--><!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]--><!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]--><!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]--><head>
+	<meta charset="utf-8">
+	<!--[if IE]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<![endif]-->
+	<meta name="description" content="Na EAD Rio Branco você encontra os cursos de reciclagem de CNH, MOPP, transportes escolares, transporte de passageiros, transporte de cargas indivisíveis e transporte de emergências. E ainda mais, encontra também as atualizações destes cursos. Os cursos são inteiramente realizados a distância e a presença é contabilizada por meio da validação facial! Após a conclusão do curso, você poderá imprimir o certificado e nossa empresa enviará eletronicamente para a BASE NACIONAL DAS CNHs. Inicie suas aulas agora mesmo, entre em contato com a gente!">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="facebook-domain-verification" content="vp2z4uti7oy9rixe0md4r96stwx2hl">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/regular.min.css">
+<link rel="stylesheet" href="css/brands.min.css">
+<link rel="stylesheet" href="css/solid.min.css">
+<link rel="stylesheet" href="css/fontawesome.min.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/main.css" class="color-switcher-link">
+
+<!-- CSS do slide responsivo, sempre depois de todos os outros -->
+<link rel="stylesheet" href="css/slide-responsivo.css">
+
+<script async="" src="js/fbevents.js"></script>
+<script src="js/modernizr-custom.js"></script>
+<link rel="shortcut icon" href="images/favicon.png">
+
+
+	<!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+		<script src="js/vendor/jquery-1.12.4.min.js"></script>
+	<![endif]-->
+	
+	
+	
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'AW-10803791648');
+	</script>
+	
+	
+	
+	
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-VSJ7M0QCMH');
+	</script>
+	
+	 <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-10803791648'); </script>
+	
+	
+	
+	
+	
+	
+	<script id="Cookiebot" src="js/uc.js" data-cbid="a241dbad-012a-4dfc-9e5b-829e0ee9a501" data-blockingmode="auto" type="text/javascript"></script>
+
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Pagamento com Pix</h1>
-            <p>Escaneie o QR Code ou copie o código para pagar</p>
-        </div>
-        
-        <button class="start-button" onclick="createPixPayment()">Gerar Código Pix - R$ 0,01</button>
-        
-        <div class="payment-card hidden" id="paymentCard">
-            <div class="payment-info">
-                <div class="payment-amount">R$ 0,01</div>
-                
-                <div class="qr-code-container">
-                    <img id="qrCodeImage" class="qr-code" src="" alt="QR Code para pagamento Pix">
-                </div>
-                
-                <div class="copy-code-container">
-                    <label class="copy-code-label" for="pixCode">Código Pix (Copiar e Cola):</label>
-                    <textarea id="pixCode" class="copy-code-input" rows="4" readonly></textarea>
-                    <button id="copyButton" class="copy-button">Copiar Código</button>
-                </div>
-            </div>
-            
-            <div class="instructions">
-                <h3>Como pagar:</h3>
-                <ol>
-                    <li>Abra o aplicativo do seu banco</li>
-                    <li>Selecione a opção Pix</li>
-                    <li>Escaneie o QR Code ou cole o código copiado</li>
-                    <li>Confirme o pagamento</li>
-                </ol>
-            </div>
-            
-            <div id="paymentStatus" class="payment-status"></div>
-        </div>
-        
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Gerando código Pix...</p>
-        </div>
-        
-        <div class="footer">
-            <p>Pagamento seguro via Mercado Pago</p>
-        </div>
-    </div>
+	
+	<!--[if lt IE 9]>
+		<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="color-main">upgrade your browser</a> to improve your experience.</div>
+	<![endif]-->
 
-    <script>
-        const qrCodeImage = document.getElementById('qrCodeImage');
-        const pixCode = document.getElementById('pixCode');
-        const copyButton = document.getElementById('copyButton');
-        const paymentStatus = document.getElementById('paymentStatus');
-        const loading = document.getElementById('loading');
-        const paymentCard = document.getElementById('paymentCard');
-        const startButton = document.querySelector('.start-button');
+	<div class="preloader">
+		<div class="preloader_image"></div>
+	</div>
 
-        let paymentCheckInterval = null;
-        let paymentId = null;
-        let checkAttempts = 0;
-        const MAX_CHECK_ATTEMPTS = 72; // 6 minutos (5s * 72 = 360s)
+	<!-- search modal -->
+	
 
-        async function createPixPayment() {
-            try {
-                loading.style.display = 'block';
-                paymentStatus.style.display = 'none';
-                startButton.style.display = 'none';
-                checkAttempts = 0;
-                
-                console.log('Criando pagamento...');
-                
-                // ATUALIZADO: Usando Netlify Functions
-                const response = await fetch('/.netlify/functions/createPixPayment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        amount: 0.01
-                    })
-                });
 
-                if (!response.ok) {
-                    throw new Error(`Erro HTTP: ${response.status}`);
-                }
+	<!-- Unyson messages modal -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="messages_modal">
+		<div class="fw-messages-wrap ls p-normal">
+			<!-- Uncomment this UL with LI to show messages in modal popup to your user: -->
+			<!--
+		<ul class="list-unstyled">
+			<li>Message To User</li>
+		</ul>
+		-->
 
-                const data = await response.json();
-                console.log('Resposta completa da API:', data);
-                
-                if (data) {
-                    // Atualiza o valor exibido
-                    document.querySelector('.payment-amount').textContent = 'R$ 0,01';
-                    
-                    // PROCURA O QR CODE EM DIFERENTES ESTRUTURAS DA API
-                    let qrCodeBase64 = null;
-                    let qrCodeText = null;
-                    
-                    // Estrutura 1: Resposta direta
-                    if (data.qr_code_base64) {
-                        qrCodeBase64 = data.qr_code_base64;
-                        qrCodeText = data.qr_code || data.copy_paste;
-                    }
-                    // Estrutura 2: Point of interaction
-                    else if (data.point_of_interaction && data.point_of_interaction.transaction_data) {
-                        qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64;
-                        qrCodeText = data.point_of_interaction.transaction_data.qr_code;
-                    }
-                    // Estrutura 3: Payment method
-                    else if (data.payment_method) {
-                        qrCodeBase64 = data.payment_method.qr_code_base64;
-                        qrCodeText = data.payment_method.qr_code;
-                    }
-                    // Estrutura 4: Transactions (sua estrutura original)
-                    else if (data.transactions && data.transactions.payments && data.transactions.payments[0]) {
-                        const payment = data.transactions.payments[0];
-                        qrCodeBase64 = payment.payment_method?.qr_code_base64;
-                        qrCodeText = payment.payment_method?.qr_code;
-                    }
-                    
-                    console.log('QR Code Base64 encontrado:', !!qrCodeBase64);
-                    console.log('QR Code Text encontrado:', !!qrCodeText);
-                    
-                    // QR Code base64
-                    if (qrCodeBase64) {
-                        // Remove data:image/png;base64, se já estiver incluído
-                        const cleanBase64 = qrCodeBase64.replace(/^data:image\/[a-z]+;base64,/, '');
-                        qrCodeImage.src = 'data:image/png;base64,' + cleanBase64;
-                        qrCodeImage.style.display = 'block';
-                        console.log('QR Code carregado com sucesso');
-                    } else {
-                        console.warn('QR Code base64 não encontrado na resposta');
-                        qrCodeImage.style.display = 'none';
-                    }
-                    
-                    // Código Pix
-                    if (qrCodeText) {
-                        pixCode.value = qrCodeText;
-                        console.log('Código Pix definido');
-                    } else {
-                        console.warn('Código Pix não encontrado na resposta');
-                        pixCode.value = 'Código não disponível';
-                    }
-                    
-                    paymentCard.classList.remove('hidden');
-                    showStatus('Aguardando pagamento... Escaneie o QR Code.', 'pending');
-                    
-                    // Obtém o ID do pagamento
-                    paymentId = data.id || 
-                               (data.transactions && data.transactions.payments && data.transactions.payments[0]?.id) ||
-                               data.payment_id;
-                    
-                    if (paymentId) {
-                        console.log('Iniciando verificação para paymentId:', paymentId);
-                        startPaymentCheck();
-                    } else {
-                        console.warn('ID do pagamento não encontrado');
-                        showStatus('Pagamento criado. Após pagar, atualize a página.', 'pending');
-                    }
-                } else {
-                    throw new Error('Resposta da API vazia ou em formato inesperado');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                showStatus('Erro: ' + error.message, 'error');
-                startButton.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
+		</div>
+	</div><!-- eof .modal -->
 
-        function startPaymentCheck() {
-            if (paymentCheckInterval) {
-                clearInterval(paymentCheckInterval);
-            }
-            
-            // Verifica a cada 5 segundos
-            paymentCheckInterval = setInterval(() => {
-                checkPaymentStatus();
-            }, 5000);
-            
-            // Verifica imediatamente
-            checkPaymentStatus();
-        }
+	<!-- wrappers for visual page editor and boxed version of template -->
+	<div id="canvas">
+		<div id="box_wrapper">
 
-        async function checkPaymentStatus() {
-            if (!paymentId) {
-                console.error('Nenhum paymentId definido');
-                return;
-            }
+			<!-- template sections -->
 
-            checkAttempts++;
-            
-            // Para a verificação após muitas tentativas
-            if (checkAttempts > MAX_CHECK_ATTEMPTS) {
-                showStatus('Tempo de verificação esgotado. Se já pagou, contate o suporte.', 'error');
-                stopPaymentCheck();
-                startButton.style.display = 'block';
-                return;
-            }
+			<!--topline section visible only on small screens|-->
+			<div class="header_absolute header_under_slider ds">
+				<section class="page_topline ds c-my-10 s-overlay">
+					<div class="container">
+						<div class="row align-items-center">
+							<div class="col-12 col-sm-6 text-left">
+								<a href="https://cursodemotoristaonline.com.br/parceria/" class="parceiro"><strong style="color: #FFF">Seja Nosso Parceiro</strong></a>
+								
+							</div>
+							<div class="col-12 col-sm-6 text-right">
 
-            try {
-                console.log(`Verificando status do pagamento (tentativa ${checkAttempts}):`, paymentId);
-                
-                // ATUALIZADO: Usando Netlify Functions
-                const response = await fetch(`/.netlify/functions/paymentStatus?id=${paymentId}`);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    console.log('Resposta completa do status:', data);
-                    console.log('Status do pagamento:', data.status);
-                    
-                    // VERIFICAÇÃO REAL COM A API
-                    if (data.status === 'approved' || 
-                        data.status === 'APROVED' || 
-                        data.status === 'APROVADO' ||
-                        data.status === 'success' ||
-                        data.status === 'SUCCESS' ||
-                        data.status === 'completed' ||
-                        data.status === 'COMPLETED' ||
-                        data.status === 'paid' ||
-                        data.status === 'PAID') {
-                        
-                        showPaymentApproved();
-                        
-                    } else if (data.status === 'pending' || 
-                              data.status === 'PENDING' || 
-                              data.status === 'pendente' ||
-                              data.status === 'PENDENTE' ||
-                              data.status === 'waiting' ||
-                              data.status === 'WAITING') {
-                        
-                        showStatus(`⏳ Aguardando pagamento... (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
-                        
-                    } else if (data.status === 'cancelled' || 
-                              data.status === 'rejected' || 
-                              data.status === 'CANCELLED' || 
-                              data.status === 'REJECTED' ||
-                              data.status === 'canceled' ||
-                              data.status === 'CANCELED' ||
-                              data.status === 'failed' ||
-                              data.status === 'FAILED' ||
-                              data.status === 'expired' ||
-                              data.status === 'EXPIRED') {
-                        
-                        showStatus('❌ Pagamento cancelado, rejeitado ou expirado.', 'error');
-                        stopPaymentCheck();
-                        startButton.style.display = 'block';
-                        
-                    } else {
-                        // Status desconhecido
-                        console.warn('Status desconhecido:', data.status);
-                        showStatus(`⚠️ Aguardando... Status: ${data.status}`, 'pending');
-                    }
-                    
-                } else {
-                    // ERRO NA API
-                    console.error(`Erro ${response.status} na API`);
-                    showStatus(`⚠️ Erro temporário na verificação (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
-                    
-                    // Tenta obter mais detalhes do erro
-                    try {
-                        const errorData = await response.json();
-                        console.error('Detalhes do erro:', errorData);
-                    } catch (e) {
-                        console.error('Não foi possível obter detalhes do erro');
-                    }
-                }
-                
-            } catch (error) {
-                console.error('Erro ao verificar status:', error);
-                showStatus(`⚠️ Erro de conexão (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
-            }
-        }
+								<ul class="small-text">
+									<li>
+										<p class="phone_number"><a onclick="return gtag_report_conversion('https://api.whatsapp.com/send?phone=5598985417436&text=Ol%C3%A1,%20vim%20pelo%20site,%20estou%20interessado%20em%20alguns%20cursos.');" href="https://api.whatsapp.com/send?phone=5598985417436&text=Ol%C3%A1,%20vim%20pelo%20site,%20estou%20interessado%20em%20alguns%20cursos." class="fa-whatsapp">
+Atendimento via WhatsApp</a></p>
 
-        function showPaymentApproved() {
-            showStatus('✅ Pagamento aprovado! Obrigado pela sua compra.', 'success');
-            stopPaymentCheck();
-            showConfetti();
-        }
+										
+									</li>
 
-        function stopPaymentCheck() {
-            if (paymentCheckInterval) {
-                clearInterval(paymentCheckInterval);
-                paymentCheckInterval = null;
-                console.log('Verificação de pagamento parada');
-            }
-        }
+									
 
-        function showStatus(message, type) {
-            paymentStatus.innerHTML = message;
-            paymentStatus.className = 'payment-status status-' + type;
-            paymentStatus.style.display = 'block';
-        }
+									<!--<li>
+										<a class="email_modal_button" href="#mail_modal"><span class="ico icon-icon"></span></a>
+									</li>-->
+									
 
-        function showConfetti() {
-            const confetti = document.createElement('div');
-            confetti.style.position = 'fixed';
-            confetti.style.top = '0';
-            confetti.style.left = '0';
-            confetti.style.width = '100%';
-            confetti.style.height = '100%';
-            confetti.style.pointerEvents = 'none';
-            confetti.style.zIndex = '9999';
-            confetti.innerHTML = `
-                <style>
-                    @keyframes confetti-fall {
-                        0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-                        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-                    }
-                    .confetti-piece {
-                        position: absolute;
-                        width: 10px;
-                        height: 10px;
-                        background: #ff0000;
-                        animation: confetti-fall 2s linear forwards;
-                    }
-                </style>
-            `;
-            
-            document.body.appendChild(confetti);
-            
-            for (let i = 0; i < 50; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                piece.style.animationDelay = Math.random() * 2 + 's';
-                piece.style.animationDuration = (1 + Math.random() * 2) + 's';
-                confetti.appendChild(piece);
-            }
-            
-            setTimeout(() => {
-                if (document.body.contains(confetti)) {
-                    document.body.removeChild(confetti);
-                }
-            }, 4000);
-        }
+								</ul>
 
-        copyButton.addEventListener('click', () => {
-            pixCode.select();
-            navigator.clipboard.writeText(pixCode.value).then(() => {
-                copyButton.textContent = '✅ Copiado!';
-                setTimeout(() => {
-                    copyButton.textContent = 'Copiar Código';
-                }, 2000);
-            }).catch(() => {
-                pixCode.select();
-                document.execCommand('copy');
-                copyButton.textContent = '✅ Copiado!';
-                setTimeout(() => {
-                    copyButton.textContent = 'Copiar Código';
-                }, 2000);
-            });
-        });
-    </script>
-</body>
-</html>
+
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--eof topline-->
+
+				<!-- header with two Bootstrap columns - left for logo and right for navigation and includes (search, social icons, additional links and buttons etc -->
+				<header class="page_header ds justify-nav-end">
+					<div class="container">
+						<div class="row align-items-center">
+							<div class="col-xl-3 col-lg-4 col-md-5 col-11">
+								<a href="./" class="logo">
+									<img src="images/logo.png" alt="">
+								</a>
+							</div>
+							<div class="col-xl-9 col-lg-8 col-md-7 col-1">
+								<div class="nav-wrap">
+
+									<!-- main nav start -->
+									<nav class="top-nav">
+										<ul class="nav sf-menu">
+											<li>
+												<a href="home">Home</a>
+											</li>
+											<li>
+												<a href="quem-somos">Quem Somos</a>
+											</li>
+
+											<li>
+												<a href="#blog">Cursos</a>
+											</li>
+											
+											<li>
+												<a href="https://cursodemotoristaonline.com.br/parceria/" class="parceiro" style="padding: 10px 20px; background: #1AAF54;">Seja Nosso Parceiro</a>
+											</li>
+
+											<li>
+												<a href="https://docs.google.com/forms/d/1NLQNJ-5H02Wj7Tnb3Yc5g51RxdsPL_V7HEMCCcoP1LA/" target="_blank">Contato</a>
+											</li>
+											<li>
+												<a href="https://ava.eadcursosdetransito.com.br/login" target="_blank">Estudar</a>
+											</li>
+											
+											
+											<li>
+												<a href="#welcome">Dúvidas Frequentes</a>
+											</li>
+											<li>
+												<a class="email_modal_button" href="#mail_modal">Contato</a>
+											</li>
+
+											<!-- contacts -->
+
+
+										</ul>
+									</nav>
+									<!-- eof main nav -->
+
+									<!--hidding includes on small devices. They are duplicated in topline-->
+									
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- header toggler -->
+					<span class="toggle_menu"><span></span></span>
+				</header>
+
+
+			</div>
+			
+
+
+			
+			<title>MAC BRASIL - CURSOS E TREINAMENTOS</title>
+<section class="page_slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li class="cs cover-image flex-slide">
+							<img src="images/slide01.jpg" alt="">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="intro_layers_wrapper">
+											<div class="intro_layers">
+												<div class="intro_layer" data-animation="fadeInRight">
+													<h1>
+												
+													</h1>
+													<h1 class="after-title">
+											
+													</h1>
+												</div>
+												<div class="intro_layer" data-animation="fadeInUp">
+													<ul class="slider-list">
+														
+													</ul>
+												</div>
+												
+												
+												<!--<div class="intro_layer" data-animation="fadeInUp">
+													<ul class="slider-list">
+														<li>Totalmente na modalidade online (EAD).</li>
+														<li>A presença nas aulas será através de VALIDAÇÃO FACIAL.</li>
+														<li>Certificado enviado eletronicamente para a Base Nacional das CNHs.</li>
+													</ul>
+												</div>-->
+												
+												
+<div class="intro_layer" data-animation="fadeInUp" style="position: relative;">
+  <a href="https://api.whatsapp.com/send?phone=5598985417436&text=Ol%C3%A1,%20vim%20pelo%20site,%20estou%20interessado%20nos%20cursos."
+     target="_blank" 
+     class="text-uppercase btn btn-outline-maincolor" 
+     style="position: relative; top: 215px; left: -68px;">
+     Mais Informações
+  </a>
+													
+													
+												</div>
+											</div> <!-- eof .intro_layers -->
+										</div> <!-- eof .intro_layers_wrapper -->
+									</div>
+									
+									<!-- eof .col-* -->
+								</div><!-- eof .row -->
+							</div><!-- eof .container-fluid -->
+						</li>
+						
+						
+						
+						<li class="cs cover-image flex-slide">
+							<img src="images/slide-parceiro.jpg" alt="">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="intro_layers_wrapper">
+											<div class="intro_layers">
+												<div class="intro_layer" data-animation="fadeInRight">
+													<h1>
+														Seja Nosso Parceiro
+													</h1>
+													<h1 class="after-title">
+														<span>Revenda</span> Nossos Cursos
+													</h1>
+												</div>
+												<div class="intro_layer" data-animation="fadeInUp">
+													<ul class="slider-list">
+														<li>Suporte ao parceiro.</li>
+														<li>Site próprio personalizado.</li>
+														<li>Produto validado.</li>
+													</ul>
+												</div>
+												<div class="intro_layer" data-animation="fadeInUp">
+													<a href="https://api.whatsapp.com/send?phone=554299853634&text=*Quero%20ser%20um%20Parceiro%20da%20EAD%20Rio%20Branco.*" target="_blank" class="text-uppercase btn btn-outline-maincolor">Entre em contato</a>
+													
+													
+												</div>
+											</div> <!-- eof .intro_layers -->
+										</div> <!-- eof .intro_layers_wrapper -->
+									</div>
+									
+									<!-- eof .col-* -->
+								</div><!-- eof .row -->
+							</div><!-- eof .container-fluid -->
+						</li>
+
+						
+						
+
+
+					</ul>
+				</div> <!-- eof flexslider -->
+	
+	
+
+	
+	
+	
+			</section>
+
+	<!--<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-3">
+
+				</div>
+				<div class="col-xs-12 col-md-6">
+					<div class="video-topo">
+						<div class="embed-responsive embed-responsive-16by9">
+							  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/FJKv9YNN2gg" allowfullscreen></iframe>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-3">
+
+				</div>
+			</div>
+		</div>
+
+	</section>-->
+
+
+
+
+	
+			
+
+			<section id="blog" class="ls s-py-70 s-py-xl-111">
+				<div class="container">
+					<div class="row">
+						<div class="divider-30 d-none d-xl-block"></div>
+						<div class="col-md-12">
+							<div class="text-center mb-55">
+								<h3>Conheça os cursos da MAC BRASIL<br><span class="color-main" style="color: #015E03">e transforme sua carreira no trânsito!</span></h3>
+
+								<p class="subtitle width-100 width-xl-60">Na MAC BRASIL, oferecemos cursos especializados para motoristas em diversas áreas do transporte, todos com certificação válida em todo o Brasil.</p>
+							</div>
+
+							<div class="row justify-content-center">
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/02.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-escolar" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/03.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-coletivo-de-passageiros" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/04.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-mopp" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/05.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-de-emergencias" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/06.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-de-cargas-indivisiveis" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+											
+											
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/01.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-reciclagem-de-cnh" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+							</div>
+						</div>
+						<div class="divider-10 divider-lg-10 divider-xl-40"></div>
+					</div>
+				</div>
+			</section><section id="blog" class="ls s-py-70 s-py-xl-111">
+				<div class="container">
+					<div class="row">
+						<div class="divider-30 d-none d-xl-block"></div>
+						<div class="col-md-12">
+							<div class="text-center mb-55">
+								<h3>Conheça os cursos da MAC BRASIL<br><span class="color-main" style="color: #015E03">e transforme sua carreira!</span></h3>
+
+								<p class="subtitle width-100 width-xl-60">Na MAC BRASIL, oferecemos cursos a distância e presencial, com métodos inovadores para garantir seu aprendizado. Nossa escola acompanha sua evolução de perto e fornece certificados reconhecidos em todo o território brasileiro.</p>
+							</div>
+
+							<div class="row justify-content-center">
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/02.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-escolar" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/03.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-coletivo-de-passageiros" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/04.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-mopp" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/05.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-de-emergencias" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/06.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-transporte-de-cargas-indivisiveis" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+											
+											
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								<div class="col-lg-4 col-md-6">
+									<article class="content-padding post type-post status-publish format-standard has-post-thumbnaills box-shadow">
+										<div class="item-media post-thumbnail">
+											<img src="images/01.jpg" alt="">
+										</div>
+										<!-- .post-thumbnail -->
+										<div class="item-content grey-bg">
+											
+											
+											
+											<div class="entry-content">
+												<a href="curso-online-reciclagem-de-cnh" class="saiba-mais"> SAIBA MAIS</a>
+											</div>
+										</div>
+										<!-- .item-content -->
+									</article>
+								</div>
+								<div class="divider-60 d-block d-md-none d-xl-none"></div>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+							</div>
+						</div>
+						<div class="divider-10 divider-lg-10 divider-xl-40"></div>
+					</div>
+				</div>
+			</section>
+
+			
+			<section id="information-block" class="ds s-pt-xl-90 s-pb-xl-94 s-pt-60 s-pb-60">
+				<div class="container">
+					<div class="row c-gutter-50">
+
+						<div class="divider-10 divider-lg-10 divider-xl-5"></div>
+						<div class="col-md-9 col-lg-6 col-sm-12">
+							<h3 class="after-title">Inicie suas aulas <span class="color-main">agora mesmo!</span></h3>
+
+							<p class="subtitle">Entre em contato!</p>
+							<div class="mt-45">
+								<a onclick="return gtag_report_conversion('https://api.whatsapp.com/send?phone=5598985417436&text=Ol%C3%A1,%20vim%20pelo%20site,%20estou%20interessado%20em%20alguns%20cursos.');" class="btn btn-outline-darkgrey small fw-400" href="https://api.whatsapp.com/send?phone=5598985417436&text=Ol%C3%A1,%20vim%20pelo%20site,%20estou%20interessado%20em%20alguns%20cursos.">Atendimento pelo WhatsApp</a>
+							</div>
+							<div class="divider-20 divider-lg-20 divider-xl-5"></div>
+						</div>
+
+
+					</div>
+				</div>
+			</section>
+			
+			<section id="welcome" class="ls">
+				<div class="container">
+					<div class="row">
+
+						<div class="divider-30 d-none d-xl-block"></div>
+
+						<div class="col-md-12">
+							<div class="row align-items-center">
+								<div class="col-lg-12">
+									<div class="divider-50 d-lg-block"></div>
+									<h3 class="width-80 mt-0"><span class="color-main">FAQ</span><br>Dúvidas Frequentes!</h3>
+									<p class="after-title subtitle">Separamos algumas das dúvidas mais comuns entre nossos alunos.</p>
+									<div id="accordion01" role="tablist">
+										<div class="card"><!-- FAQ 01 -->
+											<div class="card-header" role="tab" id="collapse01_header">
+												<h5>
+													<a data-toggle="collapse" href="#collapse01" aria-expanded="true" aria-controls="collapse01">
+														ONDE FAÇO MINHA MATRÍCULA NO CURSO?
+													</a>
+												</h5>
+											</div>
+
+											<div id="collapse01" class="collapse show" role="tabpanel" aria-labelledby="collapse01_header" data-parent="#accordion01">
+												<div class="card-body">
+													Você pode fazer sua matrícula diretamente com nossos atendentes pelo WhatsApp (98) 9 8541-7436. O nosso horário de atendimento é de segunda a sexta-feira da 8h às 19h.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 02 -->
+											<div class="card-header" role="tab" id="collapse02_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse02" aria-expanded="false" aria-controls="collapse02">
+													COMO FAÇO MINHA MATRÍCULA NO CURSO? 	
+													</a>
+												</h5>
+											</div>
+											<div id="collapse02" class="collapse" role="tabpanel" aria-labelledby="collapse02_header" data-parent="#accordion01">
+												<div class="card-body">
+													Entrando em contato com nossos atendentes, você vai encaminhar uma foto da sua CNH ou Identidade, juntamente com seu endereço, eles realizarão a sua matrícula do Curso desejado. Você pode então escolher a melhor forma de pagamento, pode ser: pix, boleto ou cartão de crédito em até 12 vezes. Após a confirmação do pagamento você receberá de imediato seu acesso ao curso.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 03 -->
+											<div class="card-header" role="tab" id="collapse03_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse03" aria-expanded="false" aria-controls="collapse03">
+														QUANTO TEMPO DEMORA PARA CONFIRMAR O PAGAMENTO E LIBERAR O ACESSO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse03" class="collapse" role="tabpanel" aria-labelledby="collapse03_header" data-parent="#accordion01">
+												<div class="card-body">
+													Se o pagamento for Pix ou cartão de credito a liberação ao curso é imediata, se o pagamento for boleto, a liberação do acesso demora um dia útil para a compensação do boleto. 
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 04 -->
+											<div class="card-header" role="tab" id="collapse04_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse04" aria-expanded="false" aria-controls="collapse04">
+														COMO É REALIZADO O CURSO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse04" class="collapse" role="tabpanel" aria-labelledby="collapse04_header" data-parent="#accordion01">
+												<div class="card-body">
+													O curso é realizado a distância ou presencial, se for a distância (EAD), é somente preciso ter acesso à internet, você tem aulas por uma plataforma online, não precisará esperar para iniciar suas aulas, você estuda online quando e onde quiser, todo o conteúdo fica disponível 24 horas por dia.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 05 -->
+											<div class="card-header" role="tab" id="collapse05_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse05" aria-expanded="false" aria-controls="collapse05">
+														POSSO FAZER O CURSO DO MEU CELULAR?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse05" class="collapse" role="tabpanel" aria-labelledby="collapse05_header" data-parent="#accordion01">
+												<div class="card-body">
+													Sim, o que é um diferencial da nossa plataforma é que ela permite que o curso seja realizado pelo celular, assim você pode estudar em qualquer lugar e a qualquer momento.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 06 -->
+											<div class="card-header" role="tab" id="collapse06_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse06" aria-expanded="false" aria-controls="collapse06">
+														OS CURSOS DA MAC BRASIL - CURSOS E TREINAMENTOS SÃO VÁLIDOS EM TODO O BRASIL E SÃO RECONHECIDOS PELO SENATRAN E PELO DETRAN DO MEU ESTADO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse06" class="collapse" role="tabpanel" aria-labelledby="collapse06_header" data-parent="#accordion01">
+												<div class="card-body">
+													Sim, os cursos são válidos para os DETRANS e em todos os estados, pois a MAC BRASIL - CURSOS E TREINAMENTOS tem parceria com a empresa EAD Rio Branco Cursos de Trânsito, é uma empresa homologada pela Secretaria Nacional de Trânsito (SENATRAN) e está autorizada a Fornecer os Cursos Especializados de Formação e Atualização da Resolução 789 (Antiga Resolução 168) em todo o Brasil. Veja a portaria de Credenciamento junto ao SENATRAN – <a href="https://www.gov.br/transportes/pt-br/pt-br/assuntos/transito/arquivos-senatran/portarias/portarias-2021/Portaria3762021.pdf">CLIQUE AQUI</a>.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 07 -->
+											<div class="card-header" role="tab" id="collapse07_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse07" aria-expanded="false" aria-controls="collapse07">
+														COMO RECEBO MEU CERTIFICADO ? 
+													</a>
+												</h5>
+											</div>
+											<div id="collapse07" class="collapse" role="tabpanel" aria-labelledby="collapse07_header" data-parent="#accordion01">
+												<div class="card-body">
+													CURSOS EAD (ONLINE): Após finalizar todas as aulas, entre em contato com nossos atendentes pelo WhatsApp (98) 9 8541-7436 e informe que concluiu o curso para solicitar seu certificado. CURSOS PRESENCIAIS: Como o instrutor acompanha o desenvolvimento durante as aulas, ao final do curso ele fará a comunicação diretamente com a escola para que o seu certificado seja emitido.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 08 -->
+											<div class="card-header" role="tab" id="collapse08_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse08" aria-expanded="false" aria-controls="collapse08">
+														E SE EU TIVER DÚVIDAS OU DIFICULDADES PARA FAZER O CURSO, COMO FAÇO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse08" class="collapse" role="tabpanel" aria-labelledby="collapse08_header" data-parent="#accordion01">
+												<div class="card-body">
+													Entre em contato conosco, todos os nossos atendentes e instrutores estão treinados para tirar todas as suas dúvidas, desde seu contato inicial, dúvidas ou dificuldades com a realização do curso. Nossos instrutores e tutores da plataforma estão disponíveis para sanar todas a dúvidas e dificuldades dos alunos com relação ao conteúdo estudado.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 09 -->
+											<div class="card-header" role="tab" id="collapse09_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse09" aria-expanded="false" aria-controls="collapse09">
+														COMO VOU SABER SE O CURSO DA PLATAFORMA MAC BRASIL - CURSOS E TREINAMENTOS É VÁLIDO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse09" class="collapse" role="tabpanel" aria-labelledby="collapse09_header" data-parent="#accordion01">
+												<div class="card-body">
+													Você pode acessar este endereço eletrônico oficial da SENATRAN e confirmar a homologação e credenciamento da empresa que somos parceiros, e confirmar a autenticidade da empresa parceira, portaria SENATRAN – <a href="https://www.gov.br/transportes/pt-br/pt-br/assuntos/transito/arquivos-senatran/portarias/portarias-2021/Portaria3762021.pdf" target="_blank">CLIQUE AQUI</a>.
+												</div>
+											</div>
+										</div>
+										
+										<div class="card"><!-- FAQ 10 -->
+											<div class="card-header" role="tab" id="collapse10_header">
+												<h5>
+													<a class="collapsed" data-toggle="collapse" href="#collapse10" aria-expanded="false" aria-controls="collapse10">
+														POSSO CONTINUAR ACESSANDO MEU CURSO DEPOIS DE FINALIZADO?
+													</a>
+												</h5>
+											</div>
+											<div id="collapse10" class="collapse" role="tabpanel" aria-labelledby="collapse10_header" data-parent="#accordion01">
+												<div class="card-body">
+													Sim, você pode continuar acessando seu curso durante 1 ano, mesmo depois de finalizado.
+												</div>
+											</div>
+										</div>
+										
+										
+										
+										
+									</div>
+									<div class="divider-80 d-lg-block"></div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</section>
+
+			
+			
+			
+			
+			
+			
+
+			
+
+			
+
+
+
+			
+
+			
+
+			<footer class="page_footer ds s-pt-77 s-pb-60 c-gutter-60">
+				<div class="container">
+					<div class="row">
+						<div class="divider-20 d-none d-xl-block"></div>
+
+						<div class="col-md-12 col-xl-5 animate" data-animation="fadeInUp">
+
+							<div class="widget widget_text ">
+
+								<img src="images/logo.png" alt="">
+								
+								
+								
+							</div>
+						</div>
+
+						
+
+
+						<div class="col-md-6 col-xl-3 animate" data-animation="fadeInUp">
+							<div class="widget widget_icons_list">
+								<h3>Atendimento</h3>
+
+								<div class="media side-icon-box">
+									<div class="icon-styled color-main fs-14">
+										<i class="ico icon-facebook-placeholder-for-locate-places-on-maps"></i>
+									</div>
+									<p class="media-body">RUA DAS MACIEIRAS, N° 219, CENTRO, BOM JESUS DAS SELVAS - MA</p>
+								</div>
+								<div class="media side-icon-box">
+									<div class="icon-styled color-main fs-14">
+										<i class="ico icon-phone-receiver"></i>
+									</div>
+									<p class="media-body">98 9 8541-7436</p>
+								</div>
+								<div class="media side-icon-box">
+									<div class="icon-styled color-main fs-14">
+										<i class="fa fa-envelope"></i>
+									</div>
+									<p class="media-body">
+										<a href="mailto:macbrasilma@gmail.com">macbrasilma@gmail.com</a>
+									</p>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-6 col-xl-4 animate" data-animation="fadeInUp">
+							<div class="widget widget_mailchimp">
+
+								<h3 class="widget-title">WhatsApp</h3>
+
+								<p>
+									Envie sua mensagem
+								</p>
+
+								<form action="https://wa.me/5598985417436" method="get" name="text">
+                        			<input type="text" class="input" id="text" name="text" placeholder="Digite aqui..." required="">
+
+									<button type="submit" class="search-submit">
+										<span class="screen-reader-text">Enviar</span>
+									</button>
+		                      </form> 
+
+							</div>
+							<div class="row c-gutter-30">
+								<div class="col-sm-12 col-xl-12">
+									
+									<a href="https://www.instagram.com/macbrasilma/" target="_blank" class="fa fa-instagram" title="twitter"><span>instagram</span></a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+<p style="text-align: center;">
+  © 2025 Todos os direitos reservados /
+  Site desenvolvido por
+  <a href="https://www.instagram.com/cyber.evolution.oficial"
+     target="_blank"
+     rel="noopener noreferrer">
+     CYBER EVOLUTION
+  </a>
+</p>
+
+					
+				</div>
+				
+			</footer>
+
+
+		</div><!-- eof #box_wrapper -->
+	</div><!-- eof #canvas -->
+
+
+	<script src="js/compressed.js"></script>
+	<script src="js/main.js"></script>
+	
+	
+<script>
+	$(function(){
+		$('#frmContato').on('submit', function(e){
+			$('#frmMensagem').hide();
+      		$('#frmContato #xs_contact_submit').html('ENVIANDO MENSAGEM...').prop("disabled",true); 
+			$('#frmContato #submit').html('ENVIANDO MENSAGEM...').prop("disabled",true); 
+			e.preventDefault();
+			var postdata = {
+				nome      : $('#frmContato input[name="name"]').val(), 
+				telefone  : $('#frmContato input[name="phone-number"]').val(), 
+				email     : $('#frmContato input[name="email"]').val(),
+				mensagem  : $('#frmContato textarea[name="massage"]').val(), 
+				assunto   : $('#frmContato select[name="Subject"]').val(), 
+				_url_     : $('#frmContato input[name="_url_"]').val(), 
+			}
+			$.post('contatoEnviar.php', postdata, function(data){
+				if(data==1){
+					$('#frmMensagem').addClass('alert-success').removeClass('alert-danger').html('Mensagem enviada com sucesso.').show();
+					$('#frmContato input, #frmContato textarea').val('');
+				} else {
+					$('#frmMensagem').addClass('alert-danger').removeClass('alert-success').html(data).show();
+				}
+				$('#frmContato #submit').html('ENVIAR MENSAGEM').prop("disabled", false);
+			})
+		});
+	});
+</script>
+
+<script>
+function ajustarAlturaSlide() {
+  const slides = document.querySelectorAll('#slide01, #slide01 .carousel-item, #slide01 .item');
+  const altura = window.innerHeight; // altura da tela
+  slides.forEach(slide => {
+    slide.style.height = altura + 'px';
+  });
+}
+
+// Ajusta ao carregar a página
+window.addEventListener('load', ajustarAlturaSlide);
+// Ajusta ao redimensionar a tela
+window.addEventListener('resize', ajustarAlturaSlide);
+</script>
+
+
+
+
+</body></html>
