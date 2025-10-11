@@ -249,7 +249,7 @@
                 console.log('Criando pagamento...');
                 
                 // ATUALIZADO: Usando Netlify Functions
-                const response = await fetch('/.netlify/functions/create-pix-payment', {
+                const response = await fetch('/.netlify/functions/createPixPayment', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -381,7 +381,7 @@
                 console.log(`Verificando status do pagamento (tentativa ${checkAttempts}):`, paymentId);
                 
                 // ATUALIZADO: Usando Netlify Functions
-                const response = await fetch(`/.netlify/functions/payment-status?id=${paymentId}`);
+                const response = await fetch(`/.netlify/functions/paymentStatus?id=${paymentId}`);
                 
                 if (response.ok) {
                     const data = await response.json();
