@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento com Pix - Mercado Pago</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #009ee3;
+            margin-bottom: 10px;
+        }
+        
+        .payment-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-info {
+            margin-bottom: 25px;
+        }
+        
+        .payment-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #009ee3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .qr-code-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: white;
+        }
+        
+        .copy-code-container {
+            margin-bottom: 20px;
+        }
+        
+        .copy-code-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .copy-code-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            font-family: monospace;
+        }
+        
+        .copy-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #009ee3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .instructions {
+            background-color: #f0f8ff;
+            border-left: 4px solid #009ee3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .payment-status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #009ee3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .start-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #009ee3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pagamento com Pix</h1>
+            <p>Escaneie o QR Code ou copie o código para pagar</p>
+        </div>
+        
+        <button class="start-button" onclick="createPixPayment()">Gerar Código Pix - R$ 0,01</button>
+        
+        <div class="payment-card hidden" id="paymentCard">
+            <div class="payment-info">
+                <div class="payment-amount">R$ 0,01</div>
+                
+                <div class="qr-code-container">
+                    <img id="qrCodeImage" class="qr-code" src="" alt="QR Code para pagamento Pix">
+                </div>
+                
+                <div class="copy-code-container">
+                    <label class="copy-code-label" for="pixCode">Código Pix (Copiar e Cola):</label>
+                    <textarea id="pixCode" class="copy-code-input" rows="4" readonly></textarea>
+                    <button id="copyButton" class="copy-button">Copiar Código</button>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>Como pagar:</h3>
+                <ol>
+                    <li>Abra o aplicativo do seu banco</li>
+                    <li>Selecione a opção Pix</li>
+                    <li>Escaneie o QR Code ou cole o código copiado</li>
+                    <li>Confirme o pagamento</li>
+                </ol>
+            </div>
+            
+            <div id="paymentStatus" class="payment-status"></div>
+        </div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Gerando código Pix...</p>
+        </div>
+        
+        <div class="footer">
+            <p>Pagamento seguro via Mercado Pago</p>
+        </div>
+    </div>
+
+    <script>
+        const qrCodeImage = document.getElementById('qrCodeImage');
+        const pixCode = document.getElementById('pixCode');
+        const copyButton = document.getElementById('copyButton');
+        const paymentStatus = document.getElementById('paymentStatus');
+        const loading = document.getElementById('loading');
+        const paymentCard = document.getElementById('paymentCard');
+        const startButton = document.querySelector('.start-button');
+
+        let paymentCheckInterval = null;
+        let paymentId = null;
+        let checkAttempts = 0;
+        const MAX_CHECK_ATTEMPTS = 72; // 6 minutos (5s * 72 = 360s)
+
+        async function createPixPayment() {
+            try {
+                loading.style.display = 'block';
+                paymentStatus.style.display = 'none';
+                startButton.style.display = 'none';
+                checkAttempts = 0;
+                
+                console.log('Criando pagamento...');
+                
+                // ATUALIZADO: Usando Netlify Functions
+                const response = await fetch('/.netlify/functions/create-pix-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: 0.01
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Resposta completa da API:', data);
+                
+                if (data) {
+                    // Atualiza o valor exibido
+                    document.querySelector('.payment-amount').textContent = 'R$ 0,01';
+                    
+                    // PROCURA O QR CODE EM DIFERENTES ESTRUTURAS DA API
+                    let qrCodeBase64 = null;
+                    let qrCodeText = null;
+                    
+                    // Estrutura 1: Resposta direta
+                    if (data.qr_code_base64) {
+                        qrCodeBase64 = data.qr_code_base64;
+                        qrCodeText = data.qr_code || data.copy_paste;
+                    }
+                    // Estrutura 2: Point of interaction
+                    else if (data.point_of_interaction && data.point_of_interaction.transaction_data) {
+                        qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64;
+                        qrCodeText = data.point_of_interaction.transaction_data.qr_code;
+                    }
+                    // Estrutura 3: Payment method
+                    else if (data.payment_method) {
+                        qrCodeBase64 = data.payment_method.qr_code_base64;
+                        qrCodeText = data.payment_method.qr_code;
+                    }
+                    // Estrutura 4: Transactions (sua estrutura original)
+                    else if (data.transactions && data.transactions.payments && data.transactions.payments[0]) {
+                        const payment = data.transactions.payments[0];
+                        qrCodeBase64 = payment.payment_method?.qr_code_base64;
+                        qrCodeText = payment.payment_method?.qr_code;
+                    }
+                    
+                    console.log('QR Code Base64 encontrado:', !!qrCodeBase64);
+                    console.log('QR Code Text encontrado:', !!qrCodeText);
+                    
+                    // QR Code base64
+                    if (qrCodeBase64) {
+                        // Remove data:image/png;base64, se já estiver incluído
+                        const cleanBase64 = qrCodeBase64.replace(/^data:image\/[a-z]+;base64,/, '');
+                        qrCodeImage.src = 'data:image/png;base64,' + cleanBase64;
+                        qrCodeImage.style.display = 'block';
+                        console.log('QR Code carregado com sucesso');
+                    } else {
+                        console.warn('QR Code base64 não encontrado na resposta');
+                        qrCodeImage.style.display = 'none';
+                    }
+                    
+                    // Código Pix
+                    if (qrCodeText) {
+                        pixCode.value = qrCodeText;
+                        console.log('Código Pix definido');
+                    } else {
+                        console.warn('Código Pix não encontrado na resposta');
+                        pixCode.value = 'Código não disponível';
+                    }
+                    
+                    paymentCard.classList.remove('hidden');
+                    showStatus('Aguardando pagamento... Escaneie o QR Code.', 'pending');
+                    
+                    // Obtém o ID do pagamento
+                    paymentId = data.id || 
+                               (data.transactions && data.transactions.payments && data.transactions.payments[0]?.id) ||
+                               data.payment_id;
+                    
+                    if (paymentId) {
+                        console.log('Iniciando verificação para paymentId:', paymentId);
+                        startPaymentCheck();
+                    } else {
+                        console.warn('ID do pagamento não encontrado');
+                        showStatus('Pagamento criado. Após pagar, atualize a página.', 'pending');
+                    }
+                } else {
+                    throw new Error('Resposta da API vazia ou em formato inesperado');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus('Erro: ' + error.message, 'error');
+                startButton.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function startPaymentCheck() {
+            if (paymentCheckInterval) {
+                clearInterval(paymentCheckInterval);
+            }
+            
+            // Verifica a cada 5 segundos
+            paymentCheckInterval = setInterval(() => {
+                checkPaymentStatus();
+            }, 5000);
+            
+            // Verifica imediatamente
+            checkPaymentStatus();
+        }
+
+        async function checkPaymentStatus() {
+            if (!paymentId) {
+                console.error('Nenhum paymentId definido');
+                return;
+            }
+
+            checkAttempts++;
+            
+            // Para a verificação após muitas tentativas
+            if (checkAttempts > MAX_CHECK_ATTEMPTS) {
+                showStatus('Tempo de verificação esgotado. Se já pagou, contate o suporte.', 'error');
+                stopPaymentCheck();
+                startButton.style.display = 'block';
+                return;
+            }
+
+            try {
+                console.log(`Verificando status do pagamento (tentativa ${checkAttempts}):`, paymentId);
+                
+                // ATUALIZADO: Usando Netlify Functions
+                const response = await fetch(`/.netlify/functions/payment-status?id=${paymentId}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    console.log('Resposta completa do status:', data);
+                    console.log('Status do pagamento:', data.status);
+                    
+                    // VERIFICAÇÃO REAL COM A API
+                    if (data.status === 'approved' || 
+                        data.status === 'APROVED' || 
+                        data.status === 'APROVADO' ||
+                        data.status === 'success' ||
+                        data.status === 'SUCCESS' ||
+                        data.status === 'completed' ||
+                        data.status === 'COMPLETED' ||
+                        data.status === 'paid' ||
+                        data.status === 'PAID') {
+                        
+                        showPaymentApproved();
+                        
+                    } else if (data.status === 'pending' || 
+                              data.status === 'PENDING' || 
+                              data.status === 'pendente' ||
+                              data.status === 'PENDENTE' ||
+                              data.status === 'waiting' ||
+                              data.status === 'WAITING') {
+                        
+                        showStatus(`⏳ Aguardando pagamento... (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
+                        
+                    } else if (data.status === 'cancelled' || 
+                              data.status === 'rejected' || 
+                              data.status === 'CANCELLED' || 
+                              data.status === 'REJECTED' ||
+                              data.status === 'canceled' ||
+                              data.status === 'CANCELED' ||
+                              data.status === 'failed' ||
+                              data.status === 'FAILED' ||
+                              data.status === 'expired' ||
+                              data.status === 'EXPIRED') {
+                        
+                        showStatus('❌ Pagamento cancelado, rejeitado ou expirado.', 'error');
+                        stopPaymentCheck();
+                        startButton.style.display = 'block';
+                        
+                    } else {
+                        // Status desconhecido
+                        console.warn('Status desconhecido:', data.status);
+                        showStatus(`⚠️ Aguardando... Status: ${data.status}`, 'pending');
+                    }
+                    
+                } else {
+                    // ERRO NA API
+                    console.error(`Erro ${response.status} na API`);
+                    showStatus(`⚠️ Erro temporário na verificação (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
+                    
+                    // Tenta obter mais detalhes do erro
+                    try {
+                        const errorData = await response.json();
+                        console.error('Detalhes do erro:', errorData);
+                    } catch (e) {
+                        console.error('Não foi possível obter detalhes do erro');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Erro ao verificar status:', error);
+                showStatus(`⚠️ Erro de conexão (${checkAttempts}/${MAX_CHECK_ATTEMPTS})`, 'pending');
+            }
+        }
+
+        function showPaymentApproved() {
+            showStatus('✅ Pagamento aprovado! Obrigado pela sua compra.', 'success');
+            stopPaymentCheck();
+            showConfetti();
+        }
+
+        function stopPaymentCheck() {
+            if (paymentCheckInterval) {
+                clearInterval(paymentCheckInterval);
+                paymentCheckInterval = null;
+                console.log('Verificação de pagamento parada');
+            }
+        }
+
+        function showStatus(message, type) {
+            paymentStatus.innerHTML = message;
+            paymentStatus.className = 'payment-status status-' + type;
+            paymentStatus.style.display = 'block';
+        }
+
+        function showConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.top = '0';
+            confetti.style.left = '0';
+            confetti.style.width = '100%';
+            confetti.style.height = '100%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            confetti.innerHTML = `
+                <style>
+                    @keyframes confetti-fall {
+                        0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+                        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                    }
+                    .confetti-piece {
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        background: #ff0000;
+                        animation: confetti-fall 2s linear forwards;
+                    }
+                </style>
+            `;
+            
+            document.body.appendChild(confetti);
+            
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                piece.style.animationDuration = (1 + Math.random() * 2) + 's';
+                confetti.appendChild(piece);
+            }
+            
+            setTimeout(() => {
+                if (document.body.contains(confetti)) {
+                    document.body.removeChild(confetti);
+                }
+            }, 4000);
+        }
+
+        copyButton.addEventListener('click', () => {
+            pixCode.select();
+            navigator.clipboard.writeText(pixCode.value).then(() => {
+                copyButton.textContent = '✅ Copiado!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copiar Código';
+                }, 2000);
+            }).catch(() => {
+                pixCode.select();
+                document.execCommand('copy');
+                copyButton.textContent = '✅ Copiado!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copiar Código';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

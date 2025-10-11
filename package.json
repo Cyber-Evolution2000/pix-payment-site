@@ -1,0 +1,8 @@
+{
+  "name": "pix-payment-site",
+  "version": "1.0.0",
+  "description": "Site de pagamento Pix com Mercado Pago",
+  "dependencies": {
+    "mercadopago": "^1.5.17"
+  }
+}
