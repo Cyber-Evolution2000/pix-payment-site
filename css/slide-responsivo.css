@@ -1,32 +1,25 @@
 /* ================================================================
-   Correção completa para exibir slide01.jpg e slide-parceiro.jpg
-   de forma responsiva em qualquer dispositivo
+   SLIDE RESPONSIVO - MOSTRA IMAGEM COMPLETA SEM CORTES
    ================================================================ */
 
-/* --- Container principal do slider --- */
-.page_slider .flexslider {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-
-/* --- Slides individuais --- */
 .page_slider .flexslider .slides li {
     position: relative;
-    text-align: center;
-    height: 70vh; /* Altura padrão para desktop */
-    min-height: 500px;
+    height: 56.25vh; /* Mantém proporção 16:9 */
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* --- Imagens do slider para desktop/tablet --- */
 .page_slider .flexslider .slides li img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important; /* Cobre toda a área mantendo proporção */
-    object-position: center;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain !important;
 }
 
-/* --- Container do conteúdo sobre a imagem --- */
+/* Container do conteúdo */
 .intro_layers_wrapper {
     position: absolute;
     top: 0;
@@ -38,114 +31,18 @@
     justify-content: center;
 }
 
-/* --- Correção do botão "Mais Informações" --- */
+/* Botão corrigido */
 .intro_layer .btn {
     position: relative !important;
     top: auto !important;
     left: auto !important;
     margin-top: 20px;
-    transform: none !important;
 }
 
-/* --- Ajustes para tablets --- */
-@media (max-width: 1024px) {
-    .page_slider .flexslider .slides li {
-        height: 60vh;
-        min-height: 400px;
-    }
-}
-
-/* --- Ajuste completo para celular --- */
+/* Mobile: ajusta altura */
 @media (max-width: 768px) {
-    
-    /* Altura do slide para mobile */
     .page_slider .flexslider .slides li {
-        height: 100vh !important; /* Ocupa tela inteira */
-        min-height: 568px; /* Altura mínima para iPhone SE */
-    }
-    
-    /* Esconde a tag <img> para usar background */
-    .page_slider .flexslider .slides li img {
-        display: none !important;
-    }
-    
-    /* Aplica a imagem como background redimensionado */
-    .page_slider .flexslider .slides li {
-        background-size: contain !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        background-color: #f8f8f8; /* Cor de fundo caso a imagem não carregue */
-    }
-    
-    /* Define a imagem correta para cada slide */
-    .page_slider .flexslider .slides li:nth-child(1) {
-        background-image: url("../images/slide01.jpg");
-    }
-    .page_slider .flexslider .slides li:nth-child(2) {
-        background-image: url("../images/slide-parceiro.jpg");
-    }
-    
-    /* Ajustes no conteúdo para mobile */
-    .intro_layers {
-        text-align: center;
-        padding: 0 20px;
-    }
-    
-    .intro_layer h1 {
-        font-size: 1.8rem !important;
-        line-height: 1.2 !important;
-    }
-    
-    .intro_layer .after-title {
-        font-size: 1.4rem !important;
-        line-height: 1.3 !important;
-    }
-    
-    .slider-list {
-        padding-left: 0;
-        margin: 15px 0;
-    }
-    
-    .slider-list li {
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-    }
-    
-    /* Botão ajustado para mobile */
-    .intro_layer .btn {
-        margin-top: 25px;
-        padding: 12px 24px;
-        font-size: 0.9rem;
-    }
-}
-
-/* --- Ajustes para telas muito pequenas --- */
-@media (max-width: 480px) {
-    .page_slider .flexslider .slides li {
-        min-height: 480px;
-    }
-    
-    .intro_layer h1 {
-        font-size: 1.5rem !important;
-    }
-    
-    .intro_layer .after-title {
-        font-size: 1.2rem !important;
-    }
-    
-    .slider-list li {
-        font-size: 0.85rem;
-    }
-    
-    .intro_layer .btn {
-        padding: 10px 20px;
-        font-size: 0.85rem;
-    }
-}
-
-/* --- Ajustes para telas muito altas --- */
-@media (min-height: 1000px) and (max-width: 768px) {
-    .page_slider .flexslider .slides li {
-        height: 80vh !important;
+        height: 50vh;
+        min-height: 300px;
     }
 }
