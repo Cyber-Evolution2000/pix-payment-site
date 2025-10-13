@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quem Somos - MAC BRASIL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #015E03, #028a0b);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .nav {
+            flex: 1;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+
+        .nav a:hover {
+            background: rgba(255,255,255,0.3);
+            color: #c8e6c9;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(1, 94, 3, 0.9), rgba(1, 94, 3, 0.8));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-light {
+            background: white;
+        }
+
+        .section-dark {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            color: #015E03;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title .divider {
+            width: 80px;
+            height: 4px;
+            background: #015E03;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Missão, Visão, Valores */
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .mvv-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mvv-icon {
+            font-size: 3rem;
+            color: #015E03;
+            margin-bottom: 20px;
+        }
+
+        .mvv-card h3 {
+            color: #015E03;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* História */
+        .historia-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .historia-text {
+            font-size: 1.1rem;
+        }
+
+        .historia-text p {
+            margin-bottom: 20px;
+        }
+
+        .historia-image {
+            text-align: center;
+        }
+
+        .historia-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .destaque-box {
+            background: #015E03;
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .destaque-box i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .destaque-box h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Diferenciais */
+        .diferenciais-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .diferencial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .diferencial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .diferencial-card i {
+            font-size: 2.5rem;
+            color: #015E03;
+            margin-bottom: 20px;
+        }
+
+        .diferencial-card h4 {
+            color: #015E03;
+            margin-bottom: 15px;
+        }
+
+        /* Equipe */
+        .equipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .membro-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .membro-foto {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: #015E03;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, #015E03, #028a0b);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #015E03;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #e8f5e8;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            color: #015E03;
+        }
+
+        .footer-col a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: #015E03;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .historia-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .logo-nav {
+                flex-direction: column;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+/* ================================================================
+   LAYOUT CORRIGIDO - LOGO MAIOR, BOTÃO MENOR
+   ================================================================ */
+
+/* Header completo */
+.header {
+    background: linear-gradient(135deg, #015E03, #028a0b);
+    color: white;
+    padding: 40px 0 25px 0; /* Mais espaço em cima */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Container principal - coluna única */
+.logo-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; /* Mais espaço entre logo e botão */
+}
+
+/* Logo BEM GRANDE */
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    height: 200px !important; /* AUMENTEI para 150px */
+    width: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Botão MENOR e mais discreto */
+.nav {
+    text-align: center;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500; /* Fonte menos grossa */
+    font-size: 16px; /* Fonte menor */
+    padding: 10px 25px; /* Botão menor */
+    background: rgba(255,255,255,0.1); /* Fundo mais transparente */
+    border: 1px solid rgba(255,255,255,0.2); /* Borda mais fina */
+    border-radius: 6px; /* Bordas menos arredondadas */
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.nav a:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-1px); /* Efeito mais suave */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .header {
+        padding: 30px 0 20px 0;
+    }
+    
+    .logo img {
+        height: 120px !important; /* Logo menor no mobile */
+    }
+    
+    .nav a {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+    
+    .logo-nav {
+        gap: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        height: 100px !important;
+    }
+    
+    .nav a {
+        padding: 7px 18px;
+        font-size: 13px;
+    }
+}
+
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+ <!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="logo-nav">
+            <!-- Logo grande em cima -->
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="MAC BRASIL">
+                </a>
+            </div>
+            
+            <!-- Botão Início centralizado embaixo -->
+            <nav class="nav">
+                <a href="index.html">Início</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Quem Somos</h1>
+            <p>Conheça a MAC BRASIL - Cursos e Treinamentos, sua referência em educação para o trânsito</p>
+        </div>
+    </section>
+
+    <!-- Missão, Visão, Valores -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="mvv-grid">
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Missão</h3>
+                    <p>Oferecer educação de qualidade no trânsito, formando condutores conscientes e profissionais capacitados através de metodologias inovadoras e conteúdo atualizado.</p>
+                </div>
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Visão</h3>
+                    <p>Ser reconhecida como a melhor escola de formação e treinamento de condutores do Brasil, referência em qualidade e inovação no ensino do trânsito.</p>
+                </div>
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Valores</h3>
+                    <p>Ética, qualidade, inovação, responsabilidade social e compromisso com a formação de cidadãos conscientes no trânsito.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- História -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossa História</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="historia-content">
+                <div class="historia-text">
+                    <p>A <strong>MAC BRASIL - Cursos e Treinamentos</strong> nasceu da paixão por educar e da necessidade de transformar a realidade do trânsito brasileiro.</p>
+                    
+                    <p>Fundada com o propósito de oferecer cursos especializados de alta qualidade, nossa escola rapidamente se tornou referência na formação e capacitação de profissionais do volante.</p>
+                    
+                    <p>Com anos de experiência no mercado, desenvolvemos metodologias próprias que combinam teoria e prática, sempre alinhadas com as mais recentes resoluções do CONTRAN e SENATRAN.</p>
+                    
+                    <p>Nossa trajetória é marcada pelo compromisso com a excelência e pela constante evolução, sempre buscando as melhores tecnologias e métodos de ensino para oferecer a melhor experiência educacional.</p>
+                </div>
+                <div class="historia-image">
+                    <div class="destaque-box">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>+5.000</h3>
+                        <p>Alunos Formados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Diferenciais</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="diferenciais-grid">
+                <div class="diferencial-card">
+                    <i class="fas fa-laptop-house"></i>
+                    <h4>Ensino Híbrido</h4>
+                    <p>Cursos EAD e presencial, oferecendo flexibilidade e comodidade para nossos alunos.</p>
+                </div>
+                <div class="diferencial-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h4>Instrutores Qualificados</h4>
+                    <p>Corpo docente experiente e constantemente capacitado nas mais recentes normas.</p>
+                </div>
+                <div class="diferencial-card">
+                    <i class="fas fa-award"></i>
+                    <h4>Certificado Válido</h4>
+                    <p>Certificação reconhecida nacionalmente e válida em todo território brasileiro.</p>
+                </div>
+                <div class="diferencial-card">
+                    <i class="fas fa-headset"></i>
+                    <h4>Suporte 24/7</h4>
+                    <p>Atendimento especializado para tirar dúvidas e oferecer suporte completo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipe -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossa Equipe</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="equipe-grid">
+                <div class="membro-card">
+                    <div class="membro-foto">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Diretor Geral</h4>
+                    <p>Profissional com mais de 15 anos de experiência em educação para o trânsito e gestão de CFCs.</p>
+                </div>
+                <div class="membro-card">
+                    <div class="membro-foto">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4>Coordenador Pedagógico</h4>
+                    <p>Especialista em metodologias de ensino e desenvolvimento de conteúdo para cursos EAD.</p>
+                </div>
+                <div class="membro-card">
+                    <div class="membro-foto">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h4>Instrutores</h4>
+                    <p>Equipe de instrutores credenciados e com vasta experiência prática em suas áreas de atuação.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para Transformar sua Carreira?</h2>
+            <p>Junte-se aos milhares de profissionais que confiam na MAC BRASIL para sua formação no trânsito.</p>
+            <a href="https://api.whatsapp.com/send?phone=5598985417436&text=Olá, gostaria de mais informações sobre os cursos" class="btn" target="_blank">
+                Fale Conosco
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+<div class="footer-col">
+    <!-- Logo GRANDE no footer -->
+    <img src="images/logo.png" alt="MAC BRASIL" style="height: 100px; width: auto; margin-bottom: 20px;">
+    <p style="color: #ccc; font-size: 16px; margin-top: 15px; line-height: 1.5;">
+        Sua escola de confiança para cursos e treinamentos no trânsito.
+    </p>
+</div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <a href="index.html">Início</a>
+                    <a href="quem-somos.html">Quem Somos</a>
+                    <a href="consulta-certificado.html">Consultar Certificado</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <a href="tel:+5598985417436"><i class="fas fa-phone"></i> (98) 98541-7436</a>
+                    <a href="mailto:macbrasilma@gmail.com"><i class="fas fa-envelope"></i> macbrasilma@gmail.com</a>
+                    <a href="#"><i class="fas fa-map-marker-alt"></i> Bom Jesus das Selvas - MA</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MAC BRASIL - CURSOS E TREINAMENTOS. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

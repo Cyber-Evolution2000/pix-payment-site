@@ -61,6 +61,134 @@
 	
 	<script id="Cookiebot" src="js/uc.js" data-cbid="a241dbad-012a-4dfc-9e5b-829e0ee9a501" data-blockingmode="auto" type="text/javascript"></script>
 
+<style>
+/* ================================================================
+   CORREÇÃO DO SLIDE PARA MOBILE - CONTEÚDO VISÍVEL
+   ================================================================ */
+
+/* Garantir que o conteúdo do slide seja visível em todos os dispositivos */
+.page_slider .intro_layers .intro_layer h1,
+.page_slider .intro_layers .intro_layer .after-title,
+.page_slider .intro_layers .intro_layer .slider-list,
+.page_slider .intro_layers .intro_layer .btn {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 768px) {
+    .page_slider .intro_layers .intro_layer h1 {
+        font-size: 1.8rem !important;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .page_slider .intro_layers .intro_layer .after-title {
+        font-size: 1.4rem !important;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .page_slider .intro_layers .intro_layer .slider-list {
+        text-align: center;
+        padding-left: 0;
+        margin: 15px 0;
+    }
+    
+    .page_slider .intro_layers .intro_layer .slider-list li {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        list-style: none;
+    }
+    
+    .page_slider .intro_layers .intro_layer .btn {
+        margin: 15px auto;
+        padding: 12px 24px;
+        font-size: 0.9rem;
+        display: inline-block !important;
+    }
+    
+    /* Centralizar todo o conteúdo no mobile */
+    .page_slider .intro_layers_wrapper {
+        text-align: center;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .page_slider .intro_layers {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+    .page_slider .intro_layers .intro_layer h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .page_slider .intro_layers .intro_layer .after-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .page_slider .intro_layers .intro_layer .slider-list li {
+        font-size: 0.85rem;
+    }
+    
+    .page_slider .intro_layers .intro_layer .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ================================================================
+   CENTRALIZAR MENU - MÉTODO RADICAL
+   ================================================================ */
+
+.page_header .col-xl-3.col-lg-4.col-md-5.col-11 {
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    display: block !important;
+    text-align: center !important;
+}
+
+.page_header .logo img {
+    width: auto !important;
+    height: 80px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+   .page_header .col-xl-9.col-lg-8.col-md-7.col-1 {
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    display: block !important;
+}
+
+.page_header .nav-wrap {
+    display: block !important;
+    text-align: center !important;
+}
+
+.page_header .top-nav .nav.sf-menu {
+    display: inline-block !important;
+    margin: 0 auto !important;
+}
+
+.page_header .top-nav .nav.sf-menu li {
+    display: inline-block !important;
+    margin: 0 12px !important;
+}
+
+</style>
+
+
 </head>
 
 <body>
@@ -102,7 +230,7 @@
 					<div class="container">
 						<div class="row align-items-center">
 							<div class="col-12 col-sm-6 text-left">
-								<a href="https://cursodemotoristaonline.com.br/parceria/" class="parceiro"><strong style="color: #FFF">Seja Nosso Parceiro</strong></a>
+								<a href="https://www.macbrasilma.com.br/consulta-certificado" class="parceiro"><strong style="color: #FFF">CONSULTE SEU CERTIFICADO</strong></a>
 								
 							</div>
 							<div class="col-12 col-sm-6 text-right">
@@ -132,67 +260,45 @@ Atendimento via WhatsApp</a></p>
 				<!--eof topline-->
 
 				<!-- header with two Bootstrap columns - left for logo and right for navigation and includes (search, social icons, additional links and buttons etc -->
-				<header class="page_header ds justify-nav-end">
-					<div class="container">
-						<div class="row align-items-center">
-							<div class="col-xl-3 col-lg-4 col-md-5 col-11">
-								<a href="./" class="logo">
-									<img src="images/logo.png" alt="">
-								</a>
-							</div>
-							<div class="col-xl-9 col-lg-8 col-md-7 col-1">
-								<div class="nav-wrap">
-
-									<!-- main nav start -->
-									<nav class="top-nav">
-										<ul class="nav sf-menu">
-											<li>
-												<a href="home">Home</a>
-											</li>
-											<li>
-												<a href="quem-somos">Quem Somos</a>
-											</li>
-
-											<li>
-												<a href="#blog">Cursos</a>
-											</li>
-											
-											<li>
-												<a href="https://cursodemotoristaonline.com.br/parceria/" class="parceiro" style="padding: 10px 20px; background: #1AAF54;">Seja Nosso Parceiro</a>
-											</li>
-
-											<li>
-												<a href="https://docs.google.com/forms/d/1NLQNJ-5H02Wj7Tnb3Yc5g51RxdsPL_V7HEMCCcoP1LA/" target="_blank">Contato</a>
-											</li>
-											<li>
-												<a href="https://ava.eadcursosdetransito.com.br/login" target="_blank">Estudar</a>
-											</li>
-											
-											
-											<li>
-												<a href="#welcome">Dúvidas Frequentes</a>
-											</li>
-											<li>
-												<a class="email_modal_button" href="#mail_modal">Contato</a>
-											</li>
-
-											<!-- contacts -->
-
-
-										</ul>
-									</nav>
-									<!-- eof main nav -->
-
-									<!--hidding includes on small devices. They are duplicated in topline-->
-									
-
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- header toggler -->
-					<span class="toggle_menu"><span></span></span>
-				</header>
+<header class="page_header ds justify-nav-end">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Logo centralizada e aumentada -->
+            <div class="col-12">
+                <a href="./" class="logo">
+                    <img src="images/logo.png" alt="MAC BRASIL">
+                </a>
+            </div>
+            
+            <!-- Mantenha o menu como está (já está centralizado) -->
+            <div class="col-xl-9 col-lg-8 col-md-7 col-1">
+                <div class="nav-wrap">
+                    <nav class="top-nav">
+                        <ul class="nav sf-menu">
+                            <li>
+    <a href="https://www.macbrasilma.com.br">Início</a>
+</li>
+                            <li>
+                                <a href="quem-somos">Quem Somos</a>
+                            </li>
+                            <li>
+                                <a href="#blog">Cursos</a>
+                            </li>
+                            <li>
+                                <a href="https://www.macbrasilma.com.br/consulta-certificado" class="parceiro" style="padding: 10px 20px; background: #1AAF54;">CONSULTE SEU CERTIFICADO</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.google.com/forms/d/1NLQNJ-5H02Wj7Tnb3Yc5g51RxdsPL_V7HEMCCcoP1LA/" target="_blank">Contato</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- header toggler -->
+    <span class="toggle_menu"><span></span></span>
+</header>
 
 
 			</div>
@@ -205,47 +311,35 @@ Atendimento via WhatsApp</a></p>
     <div class="flexslider">
         <ul class="slides">
             <li class="cs cover-image flex-slide">
-                <img src="images/slide-parceiro.jpg" alt="">
+                <img src="images/slide-parceiro.jpg" alt="Seja Nosso Parceiro">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="intro_layers_wrapper">
                                 <div class="intro_layers">
-                                    <div class="intro_layer" data-animation="fadeInRight">
-                                        <h1>
-                                            Seja Nosso Parceiro
-                                        </h1>
-                                        <h1 class="after-title">
-                                            <span>Revenda</span> Nossos Cursos
-                                        </h1>
+                                    <div class="intro_layer">
+                                        <h1>MAC BRASIL</h1>
+                                        <h1 class="after-title"><span>CURSOS</span> E TREINAMENTOS</h1>
                                     </div>
-                                    <div class="intro_layer" data-animation="fadeInUp">
+                                    <div class="intro_layer">
                                         <ul class="slider-list">
-                                            <li>Suporte ao parceiro.</li>
-                                            <li>Site próprio personalizado.</li>
-                                            <li>Produto validado.</li>
+                                            <li>Cursos EAD e Presencial.</li>
+                                            <li>Certificado Válido Nacionalmente.</li>
+                                            <li>Instrutores Qualificados.</li>
                                         </ul>
                                     </div>
-                                    <div class="intro_layer" data-animation="fadeInUp">
+                                    <div class="intro_layer">
                                         <a href="https://api.whatsapp.com/send?phone=554299853634&text=*Quero%20ser%20um%20Parceiro%20da%20EAD%20Rio%20Branco.*" target="_blank" class="text-uppercase btn btn-outline-maincolor">Entre em contato</a>
                                     </div>
-                                </div> <!-- eof .intro_layers -->
-                            </div> <!-- eof .intro_layers_wrapper -->
+                                </div>
+                            </div>
                         </div>
-                        
-                        <!-- eof .col-* -->
-                    </div><!-- eof .row -->
-                </div><!-- eof .container-fluid -->
+                    </div>
+                </div>
             </li>
         </ul>
-    </div> <!-- eof flexslider -->
-	
-	
-
-	
-	
-	
-			</section>
+    </div>
+</section>
 
 	<!--<section>
 		<div class="container">
